@@ -1,0 +1,96 @@
+<link rel="stylesheet" href="CNation.css">
+<html>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script type="text/javascript" src="functions.js"></script>
+	<script>
+		$(document).ready(function(){
+
+			//Updates the body of the home page to the search results when searching.
+			$("#search").change(function(){
+				window.location.href = 'Home.html?query='+$("#search").val();
+			});
+		});
+	</script>
+	<title>About Us</title>
+	<body>
+
+
+		<!-- START WITH BACKGROUND SO IT IS THE FURTHEST ELEMENT BACK -->
+		<div class="background">
+			<img src='resources/Art/mainBack.jpg' width='1920' height='1080'>
+		</div>
+
+
+		<!-- NAV BAR HERE -->
+		<nav>
+			<ul>
+				<li><a href="Shop.html">Shop</a></li>
+					<div id="login">
+
+
+						<!-- Ajax call will interperet whether a user is logged in and populate with appropriate link. -->
+						<script>
+							$(function(){
+
+
+								//Populates the login link with login/sign up or account.
+								$.get("checkLogin.php", function(data){
+									$('#login').html(data);
+								})
+							});
+						</script>
+					</div>
+				<li><a href="Home.html">Home</a></li>
+				<li><input type="search" id="search" placeholder='Search'></li>
+				<li id="bannerLogo"><a href='Home.html'><img src="resources/Art/cnlogo.png" alt="Creation Nation"></a></li>
+			</ul>
+		</nav>
+
+
+		<!-- DISPLAY MAIN CONTENT HERE -->
+		<main id="content">
+			<img src="resources/Art/about1.jpg" style="float:left" height="300">
+			<img src="resources/Art/about2.jpg" style="float:right" height="300">
+			<p style="margin-top: 20%">
+				Here at Creation Nation, we pride ourselves on welcoming new and improving artists to share their ideas with the world. Free of charge!
+			</p>
+			<p>
+			We have opened this site to anyone who wants to help spread the joy of music alive for the many.
+			</p>
+			<p>
+				Get your voice heard on our site, <a id="loginLink" href="Login.html">Sign Up</a> Today! We'll get you started on your passionate career and get the recognition you deserve.
+			</p>
+
+
+			<!-- JQUERY THE LINK TO SIGN UP TO REDIRECT TO ACCOUNT IF THEY ARE LOGGED IN-->
+			<script type="text/javascript">
+
+
+				//NO LOGIN PAGE IF THEY ARE ALREADY LOGGED IN.
+				$(function(){
+					$.get("validateLogin.php", function(data){
+						if(data != false){
+							$('#loginLink').attr('href', 'Account.html?user='+data);
+						}
+					})
+				});
+			</script>
+			<p>
+				If you want to talk to some of our staff, go ahead and reach us at the <a href="Contact.html">Contact Us</a> Link. We are happy to help with any of your questions!
+			</p>
+		</main>
+
+
+		<!-- FOOTER GOES HERE PLAIN AND SIMPLE -->
+		<footer>
+			<ul>
+				<li style='margin-left:40%; margin-right:5%'>
+					<a href="About.html">About Us</a>
+				</li>
+				<li style='margin-right:40%; margin-left:5%'>
+					<a href="Contact.html">Contact Us</a>
+				</li>
+			</ul>
+		</footer>
+	</body>
+</html>
