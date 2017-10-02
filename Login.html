@@ -1,155 +1,80 @@
 <!DOCTYPE html>
-<link rel="stylesheet" href="CNation.css">
 <html>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js">
-	</script>
-	<script type="text/javascript" src="functions.js"></script>
-	<script>
-		$(document).ready(function(){
-			
-			//Updates the body of the home page to the search results when searching.
-			$("#search").change(function(){
-				window.location.href = 'Home.html?query='+$("#search").val();
-			});
-
-
-			//ACTIVELY LET THEM KNOW CRIDENTIALS ARE TAKEN
-			$("#email").change(function(){
-				$.get("checkNames.php", {field : $('#email').val()}, function(data){
-					if(data == true){
-						document.getElementById("signupbtn").disabled = true;
-						$('#signUpError').html("That Email is taken.");
-					}else{
-						document.getElementById("signupbtn").disabled = false;
-						$('#signUpError').html("");
-					}
-				})
-			});
-
-			//SAME FOR USERNAME
-			$("#user").change(function(){
-				$.get("checkNames.php", {field : $('#user').val()}, function(data){
-					if(data == true){
-						document.getElementById("signupbtn").disabled = true;
-						$('#signUpError').html("That Username is taken.");
-					}else{
-						document.getElementById("signupbtn").disabled = false;
-						$('#signUpError').html("");
-					}
-				})
-			});
-		});
-	</script>
-	<title>Login/Signup</title>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../../rsc/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="../../rsc/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="rsc/styles/CNation.css">
+		
+		<script type="text/javascript" src="../../rsc/libs/jquery/3.2.0/jquery-3.2.0.min.js"></script>
+	  <script type="text/javascript" src="../../rsc/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="function/js/main.js"></script>
+		<title>Login/Signup</title>
+	</head>
 	<body>
 
 
 		<!-- START WITH BACKGROUND SO IT IS THE FURTHEST ELEMENT BACK -->
 		<div class="background">
-			<img src='resources/Art/mainBack.jpg' width='1920' height='1080'>
+			<img src='rsc/Art/mainBack.jpg' class="backgroundImg">
 		</div>
 
 
 		<!-- NAV BAR HERE -->
 		<nav>
 			<ul>
-				<li><a href="Shop.html">Shop</a></li>
+				<li class="nomobile"><a href="Shop.html">Shop</a></li>
 					<div id="login">
-
-						<!-- Ajax call will interperet whether a user is logged in and populate with appropriate link. -->
-						<script>
-							$(function(){
-
-								//Populates the login link with login/sign up or account.
-								$.get("checkLogin.php", {page: "Login"}, function(data){
-									$('#login').html(data);
-								})
-							});
-						</script>
+					<!-- Ajax call will interperet whether a user is logged in and populate with appropriate link. -->
 					</div>
-				<li><a href="Home.html">Home</a></li>
+				<li class="nomobile"><a href="Home.html">Home</a></li>
 				<li><input type="search" id="search" placeholder='Search'></li>
-				<li id="bannerLogo"><a href='Home.html'><img src="resources/Art/cnlogo.png" alt="Creation Nation"></a></li>
+				<li class="dropdownmobile" id="bannerLogo">
+					<a href='Home.html'>
+						<img src="rsc/Art/cnlogo.png" alt="Creation Nation">
+					</a>
+				</li>
 			</ul>
 		</nav>
 
 
 		<!-- DISPLAY MAIN CONTENT HERE - SEARCHES MAIN PAGE OR MAIN CONTENT OF SPECIFIC PAGE -->
 		<main id="content">
-			
 				
-				<!-- DISPLAY FORM FOR LOGIN AND SIGN UP TWO DIFFERENT BUTTONS. -->
-				<form method="post" action="signinup.php">
-					<p>Log In</p>
-					<input type="text" name="username" placeholder="Username"><br />
-					<input type="password" name="password" placeholder="Password"><br />
-					<p id="loginError"></p>
+			<!-- DISPLAY FORM FOR LOGIN AND SIGN UP TWO DIFFERENT BUTTONS. -->
+			<form method="post" action="function/php/signinup.php">
+				<p>Log In</p>
+				<input type="text" name="username" placeholder="Username"><br />
+				<input type="password" name="password" placeholder="Password"><br />
+				
+				<p id="loginError"></p>
 
-						<script>
-
-						//LET USER KNOW THEY DID NOT ENTER CORRECT INFORMATION IF THEY DIDNT
-							if(parseUrl(window.location.href)=="fail"){
-
-								$('#loginError').html("Wrong Username or Password.");
-							}
-						</script>
-					<input type="submit" name="login" value="Login" id="loginbtn">
-					<hr>
-
-					<p>Sign Up</p>
-					<input type="email" name="email" placeholder="Email" id="email"><br />
-					<input type="text" name="user" placeholder="Username" id="user"><br />
-					<input type="password" name="pass1" placeholder="Password"><br />
-					<input type="password" name="pass2" placeholder="Confirm Password"><br />
-					<p id="signUpError"></p>
-
-						<script>
-
-						//LET USER KNOW IF THEIR NAME IS TAKEN OR EMAIL IS USED OR AN ERROR OCCURED BUT THEY WERE ABLE TO SUBMIT THE FORM
-							if(parseUrl(window.location.href)=="failedexists"){
-
-								$('#signUpError').html("Either the Email or <br /> Username was taken.");
-							}else if(parseUrl(window.location.href)=="unknownerror"){
-
-								$('#signUpError').html("Unable to create account,<br /> try again later.");
-							}
-						</script>
-					<input type="submit" name="signup" value="Sign Up" id="signupbtn">
-				</form>
-				<script>
-
-					//MAKE SURE THEY HAVE INPUT THE CORRECT FIELDS FOR THE FORM
-					$('form').submit(function(){
-						if(document.forms[0].username.value != ""){
-							return true;
-						}else if(document.forms[0].email.value == ""){
-							alert("Please fill out all fields.");
-							return false;
-						}else if(document.forms[0].user.value == ""){
-							alert("Please fill out all fields.");
-							return false;
-						}else if(document.forms[0].pass1.value == ""){
-							alert("Please fill out all fields.");
-							return false;
-						}else if(document.forms[0].pass1.value != document.forms[0].pass2.value){
-							alert("Passwords do not match, try again.");
-							return false;
-						}else if(document.forms[0].username == "" && document.forms[0].password == "" && document.forms[0].email.value != ""){
-							return true;
-						}
-						return true;
-					});
-				</script>
+				<input type="submit" name="login" value="Login" id="loginbtn">
+				
+				<hr />
+				
+				<p>Sign Up</p>
+				<input type="email" name="email" placeholder="Email" id="email"><br />
+				<input type="text" name="user" placeholder="Username" id="user"><br />
+				<input type="password" name="pass1" placeholder="Password"><br />
+				<input type="password" name="pass2" placeholder="Confirm Password"><br />
+				
+				<p id="signUpError"></p>
+				
+				<input type="submit" name="signup" value="Sign Up" id="signupbtn">
+			</form>
+			
 		</main>
 
 
 		<!-- FOOTER GOES HERE PLAIN AND SIMPLE -->
-		<footer>
+		<footer class="nomobile">
 			<ul>
-				<li style='margin-left:40%; margin-right:5%'>
+				<li class="about">
 					<a href="About.html">About Us</a>
 				</li>
-				<li style='margin-right:40%; margin-left:5%'>
+				<li class="contact">
 					<a href="Contact.html">Contact Us</a>
 				</li>
 			</ul>

@@ -1,48 +1,39 @@
-<link rel="stylesheet" href="CNation.css">
+<!DOCTYPE html>
 <html>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-	<script type="text/javascript" src="functions.js"></script>
-	<script>
-		$(document).ready(function(){
-
-			//Updates the body of the home page to the search results when searching.
-			$("#search").change(function(){
-				window.location.href = 'Home.html?query='+$("#search").val();
-			});
-		});
-	</script>
-	<title>Cart</title>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../../rsc/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="../../rsc/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="rsc/styles/CNation.css">
+		
+		<script type="text/javascript" src="../../rsc/libs/jquery/3.2.0/jquery-3.2.0.min.js"></script>
+	  <script type="text/javascript" src="../../rsc/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="function/js/main.js"></script>
+		<title>Cart</title>
+	</head>
 	<body>
 
 
 		<!-- START WITH BACKGROUND SO IT IS THE FURTHEST ELEMENT BACK -->
 		<div class="background">
-			<img src='resources/Art/mainBack.jpg' width='1920' height='1080'>
+			<img src='rsc/Art/mainBack.jpg' class="backgroundImg">
 		</div>
-
 
 		<!-- NAV BAR HERE -->
 		<nav>
 			<ul>
-				<li><a class="active" href="Shop.html">Shop</a></li>
+				<li class="nomobile"><a href="Shop.html">Shop</a></li>
 					<div id="login">
-
-
-						<!-- Ajax call will interperet whether a user is logged in and populate with appropriate link. -->
-						<script>
-							$(function(){
-
-
-								//Populates the login link with login/sign up or account.
-								$.get("checkLogin.php", function(data){
-									$('#login').html(data);
-								})
-							});
-						</script>
+					<!-- Ajax call will interperet whether a user is logged in and populate with appropriate link. -->
 					</div>
-				<li><a href="Home.html">Home</a></li>
+				<li class="nomobile"><a href="Home.html">Home</a></li>
 				<li><input type="search" id="search" placeholder='Search'></li>
-				<li class="dropdownmobile" id="bannerLogo"><a href='Home.html'><img src="resources/Art/cnlogo.png" alt="Creation Nation"></a></li>
+				<li class="dropdownmobile" id="bannerLogo">
+					<a href='Home.html'>
+						<img src="rsc/Art/cnlogo.png" alt="Creation Nation">
+					</a>
+				</li>
 			</ul>
 		</nav>
 
@@ -51,28 +42,16 @@
 		<main id="content">
 
 
-			<!-- Ajax get method will pull the most recent updates. -->
-			<script>
-
-				//Writes the initial body of the home page
-				$(function(){
-					$.get("getcart.php", function(data){
-
-						//RETURNS THE FORMATTED HTML TO USE IN THE MAIN BODY PAGE
-						$("#content").html(formatMedia(data, 3));
-					})
-				});
-			</script>
 		</main>
 
 
 		<!-- FOOTER GOES HERE PLAIN AND SIMPLE -->
-		<footer>
+		<footer class="nomobile">
 			<ul>
-				<li style='margin-left:40%; margin-right:5%'>
+				<li class="about">
 					<a href="About.html">About Us</a>
 				</li>
-				<li style='margin-right:40%; margin-left:5%'>
+				<li class="contact">
 					<a href="Contact.html">Contact Us</a>
 				</li>
 			</ul>
